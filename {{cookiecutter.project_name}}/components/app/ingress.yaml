@@ -3,17 +3,17 @@ apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: ingress
-  {% if cookiecutter.ingress == "external" %}
+  {% if cookiecutter.ingress == "external" -%}
   annotations:
     kubernetes.io/ingress.class: traefik-external
   labels:
     traffic-type: external
-  {% else %}
+  {%- else -%}
   annotations:
     kubernetes.io/ingress.class: traefik-internal
   labels:
     traffic-type: internal
-  {% endif %}
+  {%- endif %}
 spec:
   entryPoints:
     - websecure
