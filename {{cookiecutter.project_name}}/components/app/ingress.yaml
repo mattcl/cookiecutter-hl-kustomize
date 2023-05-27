@@ -1,0 +1,28 @@
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: ingress
+  {% if cookiecutter.ingress == "external" %}
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+  labels:
+    traffic-type: external
+  {% else %}
+  annotations:
+    kubernetes.io/ingress.class: traefik-internal
+  labels:
+    traffic-type: internal
+  {% endif %}
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`{{ cookiecutter.service_name }}.{% if cookiecutter.ingress == "internal" %}hl.{% endif %}ancalagon.black`)
+      priority: 10
+      services:
+        - name: {{ cookiecutter.service_name }}-svc
+          port: 80
+  tls:
+    certResolver: default

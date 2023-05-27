@@ -1,0 +1,7 @@
+{
+    "service": "myservice",
+    "service_name": "{{ cookiecutter.service.lower().replace(' ', '-') }}",
+    "project_name": "hl-{{ cookiecutter.service_name }}",
+    "namespace": "{{ cookiecutter.service_name }}",
+    "ingress": ["internal", "external", "none"]
+}
