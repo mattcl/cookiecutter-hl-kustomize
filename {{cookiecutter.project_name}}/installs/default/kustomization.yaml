@@ -5,6 +5,10 @@ resources:
   - ../../components/app
 namespace: "{{ cookiecutter.namespace }}"
 namePrefix: "{{ cookiecutter.service_name }}-"
+images:
+    # TODO: change here and in the app deployment
+  - name: "traefik/whoami"
+    newTag: "v1.9"
 configMapGenerator:
   - name: app-config
     envs:
