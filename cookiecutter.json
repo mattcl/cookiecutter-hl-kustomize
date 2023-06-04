@@ -3,5 +3,8 @@
     "service_name": "{{ cookiecutter.service.lower().replace(' ', '-') }}",
     "project_name": "hl-{{ cookiecutter.service_name }}",
     "namespace": "{{ cookiecutter.service_name }}",
-    "ingress": ["internal", "external", "none"]
+    "app_image": "traefik/whoami",
+    "tag": "v1.9",
+    "ingress": ["internal", "external", "none"],
+    "initialize_git_repo": ["yes", "no"]
 }
