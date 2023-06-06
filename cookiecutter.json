@@ -5,6 +5,7 @@
     "namespace": "{{ cookiecutter.service_name }}",
     "app_image": "traefik/whoami",
     "tag": "v1.9",
+    "database": ["none", "postgres"],
     "ingress": ["internal", "external", "none"],
     "initialize_git_repo": ["yes", "no"]
 }

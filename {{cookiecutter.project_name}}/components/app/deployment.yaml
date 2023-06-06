@@ -17,6 +17,16 @@ spec:
           envFrom:
             - configMapRef:
                 name: "app-config"
+            {% if cookiecutter.database != "none" -%}
+            - configMapRef:
+                name: "db-sentinel"
+            - configMapRef:
+                name: "db-connect"
+            - secretRef:
+                # we can't let kustomize handle this because this secret is
+                # unknown to it because it's the result of unsealing the secret
+                name: "{{ cookiecutter.service_name}}-db-secret"
+            {%- endif %}
           ports:
             - name: http
               containerPort: 80
