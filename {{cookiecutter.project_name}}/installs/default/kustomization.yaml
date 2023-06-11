@@ -3,8 +3,11 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../../components/app
-  {% if cookiecutter.ingress != "none" -%}
+  {% if cookiecutter.db != "none" -%}
   - ../../components/db
+  {%- endif %}
+  {% if cookiecutter.redis != "no" -%}
+  - ../../components/redis
   {%- endif %}
   {% if cookiecutter.database != "none" -%}
   - db-secret.yaml
