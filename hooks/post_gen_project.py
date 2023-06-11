@@ -45,6 +45,7 @@ if generate_db_secret:
 REMOVE_PATHS = [
     '{% if cookiecutter.ingress == "none" %}components/app/ingress.yaml{% endif %}',
     '{% if cookiecutter.database == "none" %}components/db{% endif %}',
+    '{% if cookiecutter.redis == "no" %}components/redis{% endif %}',
     # we always remove this regardless
     'installs/default/raw-db-secret.yaml',
 ]

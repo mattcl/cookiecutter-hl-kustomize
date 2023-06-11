@@ -1,0 +1,87 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis
+spec:
+  replicas: 1
+  serviceName: redis
+  updateStrategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      name: redis
+    spec:
+      containers:
+        - name: redis
+          image: docker.io/bitnami/redis:6.2.12
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: ALLOW_EMPTY_PASSWORD
+              value: yes
+            - name: REDIS_PORT
+              value: 6379
+          readinessProbe:
+            exec:
+              command:
+                - sh
+                - "-c"
+                - "/probe/ping_readiness_local.sh 5"
+                - ping
+            initialDelaySeconds: 30
+            periodSeconds: 2
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 5
+          livenessProbe:
+            exec:
+              command:
+                - sh
+                - "-c"
+                - "/probe/ping_readiness_local.sh 5"
+                - ping
+            initialDelaySeconds: 30
+            periodSeconds: 2
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 5
+          ports:
+            - containerPort: 6379
+              name: redis
+          volumeMounts:
+            - name: data
+              mountPath: /bitnami/redis/data
+            - name: overrides
+              mountPath: /opt/bitnami/redis/mounted-etc/overrides.conf
+              subPath: overrides.conf
+            - name: redis-probe
+              mountPath: /probe
+          securityContext:
+            runAsUser: 1001
+
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      volumes:
+        - name: overrides
+          configMap:
+            name: redis-overrides
+        - name: redis-probe
+          configMap:
+            name: redis-probe
+            defaultMode: 0755
+      securityContext:
+        fsGroup: 1001
+
+  volumeClaimTemplates:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: data
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      storageClassName: local-path
+      resources:
+        requests:
+          storage: 10Gi
+      volumeMode: Filesystem

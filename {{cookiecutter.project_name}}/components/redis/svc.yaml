@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-svc
+spec:
+  ports:
+    - name: redis
+      port: 6739
+      targetPort: redis
+  sessionAffinity: None
+  clusterIP: None

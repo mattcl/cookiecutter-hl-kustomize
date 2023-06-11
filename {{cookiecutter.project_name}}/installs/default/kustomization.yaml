@@ -18,6 +18,10 @@ images:
   - name: "docker.io/bitnami/postgresql"
     newTag: "15.3.0-debian-11-r9"
   {%- endif %}
+  {% if cookiecutter.redis != "no" -%}
+  - name: "docker.io/bitnami/redis"
+    newTag: "6.2.12"
+  {%- endif %}
 configMapGenerator:
   - name: app-config
     envs:
