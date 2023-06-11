@@ -3,7 +3,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../../components/app
-  {% if cookiecutter.db != "none" -%}
+  {% if cookiecutter.database != "none" -%}
   - ../../components/db
   {%- endif %}
   {% if cookiecutter.redis != "no" -%}
