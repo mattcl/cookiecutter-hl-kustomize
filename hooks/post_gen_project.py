@@ -1,4 +1,5 @@
 import os
+import shutil
 import subprocess
 
 # if we're using a db, we're going to generate the sealed secret and remove the
@@ -54,7 +55,7 @@ for path in REMOVE_PATHS:
     path = path.strip()
     if path and os.path.exists(path):
         if os.path.isdir(path):
-            os.rmdir(path)
+            shutil.rmtree(path, ignore_errors=True)
         else:
             os.unlink(path)
 
