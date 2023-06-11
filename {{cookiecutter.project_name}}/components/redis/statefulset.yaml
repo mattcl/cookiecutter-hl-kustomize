@@ -20,7 +20,7 @@ spec:
             - name: ALLOW_EMPTY_PASSWORD
               value: yes
             - name: REDIS_PORT
-              value: 6379
+              value: "6379"
           readinessProbe:
             exec:
               command:
@@ -28,7 +28,7 @@ spec:
                 - "-c"
                 - "/probe/ping_readiness_local.sh 5"
                 - ping
-            initialDelaySeconds: 30
+            initialDelaySeconds: 10
             periodSeconds: 2
             timeoutSeconds: 5
             successThreshold: 1
@@ -40,7 +40,7 @@ spec:
                 - "-c"
                 - "/probe/ping_readiness_local.sh 5"
                 - ping
-            initialDelaySeconds: 30
+            initialDelaySeconds: 15
             periodSeconds: 2
             timeoutSeconds: 5
             successThreshold: 1
