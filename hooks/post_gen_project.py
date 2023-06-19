@@ -42,13 +42,15 @@ if generate_db_secret:
         "installs/default/db-secret.yaml"
     ])
 
+# move the gitignore to .gitignore. We do this so it doesn't get treated as a
+# .gitignore file by the template's repo
+shutil.move("gitignore", ".gitignore")
+
 # remove unneeded files
 REMOVE_PATHS = [
     '{% if cookiecutter.ingress == "none" %}components/app/ingress.yaml{% endif %}',
     '{% if cookiecutter.database == "none" %}components/db{% endif %}',
     '{% if cookiecutter.redis == "no" %}components/redis{% endif %}',
-    # we always remove this regardless
-    'installs/default/raw-db-secret.yaml',
 ]
 
 for path in REMOVE_PATHS:
