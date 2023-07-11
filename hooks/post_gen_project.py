@@ -51,6 +51,10 @@ REMOVE_PATHS = [
     '{% if cookiecutter.ingress == "none" %}components/app/ingress.yaml{% endif %}',
     '{% if cookiecutter.database == "none" %}components/db{% endif %}',
     '{% if cookiecutter.redis == "no" %}components/redis{% endif %}',
+    '{% if cookiecutter.database == "none" %}installs/default/raw-db-secret.yaml{% endif %}',
+    '{% if cookiecutter.database == "none" %}installs/default/db-secret.yaml{% endif %}',
+    '{% if cookiecutter.database == "none" %}installs/default/db-connect.env{% endif %}',
+    '{% if cookiecutter.database == "none" %}installs/default/db-config.env{% endif %}',
 ]
 
 for path in REMOVE_PATHS:
